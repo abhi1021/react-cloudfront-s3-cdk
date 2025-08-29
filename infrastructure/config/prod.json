@@ -1,0 +1,19 @@
+{
+  "environment": "prod",
+  "region": "eu-west-2",
+  "account": "YOUR_AWS_ACCOUNT_ID",
+  "domain": "yourdomain.com",
+  "certificateArn": "arn:aws:acm:eu-west-2:YOUR_AWS_ACCOUNT_ID:certificate/YOUR_CERTIFICATE_ID",
+  "lambda": {
+    "memorySize": 1024,
+    "timeout": 60
+  },
+  "cloudfront": {
+    "priceClass": "PRICE_CLASS_ALL"
+  },
+  "tags": {
+    "Environment": "prod",
+    "Project": "material-dashboard-react",
+    "ManagedBy": "cdk"
+  }
+}

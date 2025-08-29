@@ -1,0 +1,78 @@
+name: Deploy to AWS
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+        - dev
+        - prod
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      id-token: write
+      contents: read
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+    
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+        aws-region: ${{ secrets.AWS_REGION || 'us-east-1' }}
+    
+    - name: Install React dependencies
+      run: npm ci
+    
+    - name: Build React app
+      run: npm run build
+    
+    - name: Install CDK dependencies
+      run: |
+        cd infrastructure
+        pip install -r requirements.txt
+    
+    - name: Install CDK CLI
+      run: npm install -g aws-cdk
+    
+    - name: Set environment
+      id: env
+      run: |
+        if [ "${{ github.event.inputs.environment }}" != "" ]; then
+          echo "env=${{ github.event.inputs.environment }}" >> $GITHUB_OUTPUT
+        else
+          echo "env=dev" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: CDK bootstrap
+      run: |
+        cd infrastructure
+        cdk bootstrap
+    
+    - name: CDK deploy
+      run: |
+        cd infrastructure
+        cdk deploy MaterialDashboard-${{ steps.env.outputs.env }} --require-approval never
+      env:
+        ENVIRONMENT: ${{ steps.env.outputs.env }}

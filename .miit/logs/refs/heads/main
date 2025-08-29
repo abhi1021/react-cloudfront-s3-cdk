@@ -1,0 +1,4 @@
+0000000000000000000000000000000000000000 042ccb6cd009fa41d86fe7d300a677e2b56120eb Abhi <abhi1021@gmail.com> 1755690726 +0530	commit (initial): chore: initialize repo with sanitized configs and hardened .gitignore
+042ccb6cd009fa41d86fe7d300a677e2b56120eb 900aa2ae3dc85bfc97f4a7a01916cc2d4ab8dcb5 Abhi <abhi1021@gmail.com> 1755690838 +0530	commit: ci: add gitleaks secret scanning (GitHub Actions + Husky pre-commit)
+900aa2ae3dc85bfc97f4a7a01916cc2d4ab8dcb5 c71e162f37c470bc38740f84303fd3bd2e059325 Abhi <abhi1021@gmail.com> 1755691097 +0530	commit: docs: rename project to react-cloudfront-s3-cdk
+c71e162f37c470bc38740f84303fd3bd2e059325 17d92c882723cf50534ed04e2a52a807338e9cb6 Abhi <abhi1021@gmail.com> 1755691238 +0530	commit: docs: rewrite README for react-cloudfront-s3-cdk (purpose, features, deploy steps)
