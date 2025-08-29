@@ -59,3 +59,5 @@ yarn.lock
 # Project-specific
 commit.sh
 infrastructure/template.yaml
+
+.miit
